@@ -105,7 +105,7 @@ line_length = 110
 
 [tool.pytest.ini_options]
 addopts = [
-    "--cov=src/rail",
+    "--cov=rail.estimation.algos.delightPZ",
     "--cov-branch",
     "--cov-report=html"
 ]
