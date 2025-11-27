@@ -36,6 +36,7 @@ class DelightInformer(CatInformer):
     """
 
     name = "DelightInformer"
+    entrypoint_function = "inform"  # the user-facing science function for this class
     outputs = []
     config_options = CatInformer.config_options.copy()
     config_options.update(
@@ -259,6 +260,7 @@ class DelightEstimator(CatEstimator):
     """
 
     name = "DelightEstimator"
+    entrypoint_function = "estimate"  # the user-facing science function for this class
     inputs = [("input", TableHandle)]
     config_options = CatEstimator.config_options.copy()
     config_options.update(
