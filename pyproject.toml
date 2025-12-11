@@ -21,6 +21,7 @@ dependencies = [
     "corner",
     "cython",
     "emcee",
+    "delight @ git+https://github.com/LSSTDESC/Delight",
 ]
 
 [project.optional-dependencies]
