@@ -37,6 +37,7 @@ class DelightInformer(CatInformer):
 
     name = "DelightInformer"
     entrypoint_function = "inform"  # the user-facing science function for this class
+    interactive_function = "delight_informer"
     outputs = []
     config_options = CatInformer.config_options.copy()
     config_options.update(
@@ -167,14 +168,13 @@ class DelightInformer(CatInformer):
         self.chunknum = 0
         self.delightparamfile = self.config["delightparamfile"]
 
-    def inform(self, training_data):
+    def inform(self, training_data: dict | TableHandle, **kwargs) -> None:
         """Override the inform method because Delight doesn't have a model to return
 
         Parameters
         ----------
-        input_data : `dict` or `TableHandle`
+        training_data : `dict` or `TableHandle`
             dictionary of all input data, or a `TableHandle` providing access to it
-
         """
         self.set_data("input", training_data)
         self.run()
@@ -261,6 +261,7 @@ class DelightEstimator(CatEstimator):
 
     name = "DelightEstimator"
     entrypoint_function = "estimate"  # the user-facing science function for this class
+    interactive_function = "delight_estimator"
     inputs = [("input", TableHandle)]
     config_options = CatEstimator.config_options.copy()
     config_options.update(
