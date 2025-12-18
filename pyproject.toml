@@ -16,7 +16,7 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "pz-rail-base>=1.0.3",
+    "pz-rail-base>=2.0.0",
     "coloredlogs",
     "corner",
     "cython",
@@ -48,7 +48,7 @@ write_to = "src/rail/delight/_version.py"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts   = ["--cov=rail", "--cov-report=html"]
+addopts = ["--cov=rail", "--cov-report=html"]
 
 [tool.pylint]
 disable = [
