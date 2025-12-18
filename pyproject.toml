@@ -16,7 +16,7 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "pz-rail-base>=2.0.0",
+    "pz-rail-base>=2.0.0-dev",
     "coloredlogs",
     "corner",
     "cython",
