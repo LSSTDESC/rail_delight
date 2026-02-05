@@ -242,12 +242,7 @@ class DelightInformer(CatInformer):
         else:  # pragma: no cover
             training_data = self.get_data("input")
 
-        convertDESCcatTrainData(
-            self.delightparamfile,
-            training_data,
-            flag_filter=self.config["flag_filter_training"],
-            snr_cut=self.config["snr_cut_training"],
-        )
+        convertDESCcatTrainData(self.delightparamfile, training_data)
 
         # Learn with Gaussian processes
         delightLearn(self.delightparamfile)
@@ -449,13 +444,7 @@ class DelightEstimator(CatEstimator):
             out.write(paramfile_txt)
 
         # convert the chunk data into the required  flux-redshift validation file for delight
-        indexes_sel = convertDESCcatChunk(
-            delightparamfilechunk,
-            data,
-            self.chunknum,
-            flag_filter_validation=self.flag_filter_validation,
-            snr_cut_validation=self.snr_cut_validation,
-        )
+        indexes_sel = convertDESCcatChunk(delightparamfilechunk, data, self.chunknum)
 
         # template fitting for that chunk
         templateFitting(delightparamfilechunk)
@@ -472,7 +461,7 @@ class DelightEstimator(CatEstimator):
         numzs = len(d)
 
         zmode, pdfs = getDelightRedshiftEstimation(
-            delightparamfilechunk, self.chunknum, numzs, indexes_sel
+            delightparamfilechunk, self.chunknum, numzs
         )
         zmode = np.round(zmode, 3)
 
