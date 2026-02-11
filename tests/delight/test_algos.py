@@ -42,6 +42,7 @@ def test_delight():
         "rail/estimation/data/FILTER/DC2LSST_*_gaussian_coefficients.txt",
         "rail/examples_data/estimation_data/tmp/delight_data/galaxies*.txt",
         "parametersTest*.cfg",
+        "rail/examples_data/estimation_data/tmp/delight_data/*.h5",
     ]:
         files = glob.glob(pattern)
         for file_ in files:
