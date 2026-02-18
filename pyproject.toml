@@ -1,10 +1,10 @@
 [project]
 name = "pz-rail-delight"
 requires-python = ">=3.9"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 readme = "README.md"
 authors = [
-    { name = "LSST Dark Energy Science Collaboration (DESC)", email = "later@later.com" }
+    { name = "LSST Dark Energy Science Collaboration (DESC)", email = "later@later.com" },
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -16,11 +16,12 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "pz-rail-base>=1.0.3",
+    "pz-rail-base>=2.0.0-dev",
     "coloredlogs",
     "corner",
     "cython",
     "emcee",
+    "delight @ git+https://github.com/LSSTDESC/Delight",
 ]
 
 [project.optional-dependencies]
@@ -31,13 +32,13 @@ dev = [
     "pytest",
     "pytest-cov",
     "yamllint",
-    "pre-commit", # Used to run checks before finalizing a git commit
-    "pylint", # Used for static linting of files
+    "pre-commit",    # Used to run checks before finalizing a git commit
+    "pylint",        # Used for static linting of files
 ]
 
 [build-system]
 requires = [
-    "setuptools>=62", # Used to build and package the Python project
+    "setuptools>=62",      # Used to build and package the Python project
     "setuptools_scm>=6.2", # Gets release version from git. Makes it available programmatically
 ]
 build-backend = "setuptools.build_meta"
@@ -46,13 +47,8 @@ build-backend = "setuptools.build_meta"
 write_to = "src/rail/delight/_version.py"
 
 [tool.pytest.ini_options]
-testpaths = [
-    "tests",
-]
-addopts = [
-    "--cov=rail",
-    "--cov-report=html"
-]
+testpaths = ["tests"]
+addopts = ["--cov=rail", "--cov-report=html"]
 
 [tool.pylint]
 disable = [
