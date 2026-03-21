@@ -20,6 +20,7 @@ import sys
 import numpy as np
 import qp
 from ceci.config import StageParameter as Param
+from rail.core.common_params import SHARED_PARAMS
 from rail.core.data import TableHandle
 from rail.estimation.estimator import CatEstimator, CatInformer
 from rail.utils.path_utils import RAILDIR
@@ -41,12 +42,14 @@ class DelightInformer(CatInformer):
     outputs = []
     config_options = CatInformer.config_options.copy()
     config_options.update(
-        dlght_redshiftMin=Param(float, 0.01, msg="min redshift"),
-        dlght_redshiftMax=Param(float, 3.01, msg="max redshift"),
-        dlght_redshiftNumBinsGPpred=Param(int, 301, msg="num bins"),
-        nzbins=Param(int, 301, msg="num z bins"),
-        dlght_redshiftBinSize=Param(float, 0.01, msg="???"),
-        dlght_redshiftDisBinSize=Param(float, 0.2, msg="bad, shouldnt be here"),
+        #dlght_redshift_min=Param(float, 0.01, msg="min redshift"),
+        #dlght_redshift_max=Param(float, 3.01, msg="max redshift"),
+        zmin=SHARED_PARAMS,
+        zmax=SHARED_PARAMS,
+        dlght_redshift_numbins_gp_pred=Param(int, 301, msg="num bins"),
+        nzbins=SHARED_PARAMS,
+        dlght_redshift_bin_size=Param(float, 0.01, msg="sets another grid size"),
+        dlght_redshift_dis_bin_size=Param(float, 0.2, msg="sets yet another grid size"),
         bands_names=Param(
             str,
             "DC2LSST_u DC2LSST_g DC2LSST_r DC2LSST_i DC2LSST_z DC2LSST_y",
@@ -148,14 +151,14 @@ class DelightInformer(CatInformer):
             ),
             msg="input data directory for ascii data",
         ),
-        zPriorSigma=Param(float, 0.2, msg="sigma for redshift prior"),
+        z_prior_sigma=Param(float, 0.2, msg="sigma for redshift prior"),
         ellPriorSigma=Param(float, 0.5, msg="prior param"),
-        fluxLuminosityNorm=Param(float, 1.0, msg="luminosity norm factor"),
+        flux_luminosity_norm=Param(float, 1.0, msg="luminosity norm factor"),
         alpha_C=Param(float, 1.0e3, msg="prior param"),
         V_C=Param(float, 0.1, msg="prior param"),
         alpha_L=Param(float, 1.0e2, msg="prior param"),
         V_L=Param(float, 0.1, msg="prior param"),
-        lineWidthSigma=Param(float, 20, msg="prior param"),
+        line_width_sigma=Param(float, 20, msg="prior param"),
     )
 
     outputs = []
@@ -260,9 +263,9 @@ class DelightEstimator(CatEstimator):
     inputs = [("input", TableHandle)]
     config_options = CatEstimator.config_options.copy()
     config_options.update(
-        dlght_redshiftMin=Param(float, 0.01, msg="min redshift"),
-        dlght_redshiftMax=Param(float, 3.01, msg="max redshift"),
-        dlght_redshiftNumBinsGPpred=Param(int, 301, msg="num bins"),
+        dlght_redshift_min=Param(float, 0.01, msg="min redshift"),
+        dlght_redshift_max=Param(float, 3.01, msg="max redshift"),
+        dlght_redshift_numbins_gp_pred=Param(int, 301, msg="num bins"),
         nzbins=Param(int, 301, msg="num z bins"),
         dlght_redshiftBinSize=Param(float, 0.01, msg="???"),
         dlght_redshiftDisBinSize=Param(float, 0.2, msg="bad, shouldnt be here"),
@@ -367,14 +370,14 @@ class DelightEstimator(CatEstimator):
             ),
             msg="input data directory for ascii data",
         ),
-        zPriorSigma=Param(float, 0.2, msg="sigma for redshift prior"),
+        z_prior_sigma=Param(float, 0.2, msg="sigma for redshift prior"),
         ellPriorSigma=Param(float, 0.5, msg="prior param"),
-        fluxLuminosityNorm=Param(float, 1.0, msg="luminosity norm factor"),
+        flux_luminosity_norm=Param(float, 1.0, msg="luminosity norm factor"),
         alpha_C=Param(float, 1.0e3, msg="prior param"),
         V_C=Param(float, 0.1, msg="prior param"),
         alpha_L=Param(float, 1.0e2, msg="prior param"),
         V_L=Param(float, 0.1, msg="prior param"),
-        lineWidthSigma=Param(float, 20, msg="prior param"),
+        line_width_sigma=Param(float, 20, msg="prior param"),
     )
 
     def __init__(self, args, **kwargs):
@@ -386,10 +389,15 @@ class DelightEstimator(CatEstimator):
         self.delightindata = self.config["dlght_inputdata"]
         self.flag_filter_validation = self.config["flag_filter_validation"]
         self.snr_cut_validation = self.config["snr_cut_validation"]
-        self.zgrid = np.arange(
-            self.config["dlght_redshiftMin"],
-            self.config["dlght_redshiftMax"],
-            self.config["dlght_redshiftBinSize"],
+        # self.zgrid = np.arange(
+        #    self.config["dlght_redshift_min"],
+        #    self.config["dlght_redshift_max"],
+        #    self.config["dlght_redshiftBinSize"],
+        # )
+        self.zgrid = np.linspace(
+            self.config["zmin"],
+            self.config["zmax"],
+            self.config["nzbins"]
         )
 
     def open_model(self, **kwargs):

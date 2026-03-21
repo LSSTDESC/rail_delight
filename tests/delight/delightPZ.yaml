@@ -18,11 +18,17 @@ run_params:
 # redshift range and binning for delight
 # dlght_ prepend means a parameter used by Delight
 #------------------------------------------------
-  dlght_redshiftMin: 0.01
-  dlght_redshiftMax: 3.011
-  dlght_redshiftNumBinsGPpred: 301
-  dlght_redshiftBinSize: 0.01
-  dlght_redshiftDisBinSize: 0.2
+#  dlght_redshiftMin: 0.01
+#  dlght_redshiftMax: 3.011
+#  dlght_redshiftNumBinsGPpred: 301
+#  dlght_redshiftBinSize: 0.01
+#  dlght_redshiftDisBinSize: 0.2
+  zmin: 0.01
+  zmax: 3.011
+  nzbins: 301
+  dlght_redshift_numbins_gp_pred: 301
+  dlght_redshift_bin_size: 0.01
+  dlght_redshift_dis_bin_size: 0.2
 #-----------------------------------------------
 # Delight input data (Filters and SED templates), note Delight will write inside this directory
 # example recommended:
@@ -66,7 +72,7 @@ run_params:
 #-------------------------------------------------------------------------
 # Delight hyper-parameters that must be optimized
 #---------------------------------------------------------------------------
-  zPriorSigma: 0.2
+  z_prior_sigma: 0.2
   ellPriorSigma: 0.5
   fluxLuminosityNorm: 1.0
   alpha_C: 1.0e3
